@@ -31,12 +31,23 @@ const truckTypes = [
   "Cargo Van",
 ];
 
+/* ---------------- SLIDESHOW IMAGES (5 TRUCK IMAGES) ---------------- */
+
+const slideshowImages = [
+  "/pexels-photo-33081220.avif",
+  "/pexels-photo-8865029.avif",
+  "/pexels-photo-9703050.avif",
+  "/pexels-photo-27508769.avif",
+  "/pexels-photo-29399463.avif",
+];
+
 /* ---------------- HERO ---------------- */
 
 const Hero = ({ setCurrentSection }) => {
   const [currentTruck, setCurrentTruck] = useState(0);
   const [displayText, setDisplayText] = useState("");
   const [isTyping, setIsTyping] = useState(true);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   /* ---------------- AOS ---------------- */
 
@@ -81,6 +92,16 @@ const Hero = ({ setCurrentSection }) => {
     return () => clearInterval(typingInterval);
   }, [currentTruck]);
 
+  /* ---------------- IMAGE SLIDESHOW (1 IMAGE AT A TIME) ---------------- */
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % slideshowImages.length);
+    }, 3000); // 3 seconds per image
+
+    return () => clearInterval(interval);
+  }, []);
+
   /* ---------------- BUTTON CLICK ---------------- */
 
   const handleOnboardClick = () => {
@@ -100,20 +121,25 @@ const Hero = ({ setCurrentSection }) => {
       onCopy={(e) => e.preventDefault()}
       onCut={(e) => e.preventDefault()}
     >
-      {/* ---------------- VIDEO BACKGROUND ---------------- */}
-      <div className="absolute inset-0 w-full h-full">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute top-0 left-0 w-full h-full object-cover"
-        >
-          <source 
-            src="/video.mp4" 
-            type="video/mp4" 
-          />
-        </video>
+      {/* ---------------- IMAGE SLIDESHOW BACKGROUND (1 AT A TIME) ---------------- */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden">
+        {slideshowImages.map((image, index) => (
+          <div
+            key={index}
+            className={`absolute top-0 left-0 w-full h-full transition-opacity duration-1000 ease-in-out ${
+              index === currentImageIndex ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            <img
+              src={image}
+              alt={`Truck ${index + 1}`}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        ))}
+        
+        {/* ---------------- OVERLAY WITH OPACITY ---------------- */}
+        <div className="absolute inset-0 bg-black/70 z-10"></div>
       </div>
 
       {/* ---------------- CONTENT ---------------- */}

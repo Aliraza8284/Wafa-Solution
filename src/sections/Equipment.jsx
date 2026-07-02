@@ -129,7 +129,7 @@ const Equipment = () => {
 
   useEffect(() => {
     AOS.init({
-      duration:10,  // ✅ 0.01 second = 10ms
+      duration: 800,  // ✅ Animation duration 0.8 seconds
       once: false,
       easing: "ease-out-cubic",
     });
@@ -194,16 +194,16 @@ const Equipment = () => {
           </p>
         </div>
 
-        {/* Cards Grid */}
+        {/* Cards Grid - Only Bottom to Top Animation */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-5">
           {cardsData.map((card, index) => (
             <div
               key={card.id}
               className="relative aspect-[3/4] cursor-pointer group w-full"
               onClick={() => toggleFlip(card.id)}
-              data-aos={index % 4 === 0 ? "fade-right" : index % 4 === 1 ? "fade-up" : index % 4 === 2 ? "fade-down" : "fade-left"}
-              data-aos-delay={0}  // ✅ Delay 0 karein
-              data-aos-duration="10"  // ✅ 0.01 second = 10ms
+              data-aos="fade-up"
+              data-aos-delay={index * 50}
+              data-aos-duration="800"
             >
               <div className={`relative w-full h-full transition-all duration-700 transform-style-3d ${flippedCard === card.id ? 'rotate-y-180' : ''}`}>
 
