@@ -129,7 +129,7 @@ const Equipment = () => {
 
   useEffect(() => {
     AOS.init({
-      duration: 1200,
+      duration:10,  // ✅ 0.01 second = 10ms
       once: false,
       easing: "ease-out-cubic",
     });
@@ -194,7 +194,7 @@ const Equipment = () => {
           </p>
         </div>
 
-        {/* 4 Cards per Row Grid - Responsive */}
+        {/* Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-5">
           {cardsData.map((card, index) => (
             <div
@@ -202,12 +202,12 @@ const Equipment = () => {
               className="relative aspect-[3/4] cursor-pointer group w-full"
               onClick={() => toggleFlip(card.id)}
               data-aos={index % 4 === 0 ? "fade-right" : index % 4 === 1 ? "fade-up" : index % 4 === 2 ? "fade-down" : "fade-left"}
-              data-aos-delay={index * 100}
-              data-aos-duration="1000"
+              data-aos-delay={0}  // ✅ Delay 0 karein
+              data-aos-duration="10"  // ✅ 0.01 second = 10ms
             >
               <div className={`relative w-full h-full transition-all duration-700 transform-style-3d ${flippedCard === card.id ? 'rotate-y-180' : ''}`}>
 
-                {/* FRONT SIDE - Only Image and Name */}
+                {/* FRONT SIDE */}
                 <div className="absolute inset-0 rounded-xl md:rounded-2xl overflow-hidden backface-hidden bg-gray-800 flex items-center justify-center">
                   <img
                     src={card.image}
@@ -227,7 +227,7 @@ const Equipment = () => {
                   </div>
                 </div>
                 
-                {/* BACK SIDE - Complete Details */}
+                {/* BACK SIDE */}
                 <div className="absolute inset-0 rounded-xl md:rounded-2xl overflow-hidden backface-hidden rotate-y-180 bg-gradient-to-br from-gray-800 to-gray-900 border border-[rgb(200,155,60)]/30 p-3 md:p-4">
                   <div className="h-full flex flex-col justify-between">
                     <div>

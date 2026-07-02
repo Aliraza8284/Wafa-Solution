@@ -17,7 +17,7 @@ const Advantage = () => {
 
   useEffect(() => {
     AOS.init({
-      duration: 1000,
+      duration:10,
       once: false,
       easing: "ease-out-cubic",
     });
